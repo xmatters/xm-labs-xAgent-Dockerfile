@@ -25,13 +25,37 @@ First, login to xMatters and navigate to the Developer tab and click the Agents.
 
 Then, save the [Dockerfile](Dockerfile) to some place where you want to run the agent.
 
-Finally, run the following command swapping out the following values:
-* `WEBSOCKET_HOST`should point to your xMatters host url. This should be something like `https://acme.xmatters.com`
-* `WEBSOCKET_SECRET` is `XMATTERS_KEY` from the install script
-* `OWNER_API_KEY` is the `API_KEY` in the install script
+# Running
+
+To build the docker image, run the build command from the same directory you save the Dockerfile
+```
+docker build -t xa .
+```
+
+Then, run the following command, swapping out these values:
+* `WEBSOCKET_HOST` should point to your xMatters host url. This should be something like `https://acme.xmatters.com`
+* `WEBSOCKET_SECRET` is `XMATTERS_KEY` from the install script above
+* `OWNER_API_KEY` is the `API_KEY` in the install script above
+
+
+```bash
+docker run \
+   -e WEBSOCKET_HOST=https://acme.xmatters.com \
+   -e WEBSOCKET_SECRET=xxxxxxxxxxxxxxxxxxxxxxx \
+   -e OWNER_API_KEY=yyyyyyyyyyyyyyyyyyyyyyy \
+   xa:latest
+```
 
 
 # Testing
+After the `docker run` command chugs away for a moment, head over to the **Installed** tab of the Agents section and there will be a new agent!
 
+<kbd>
+	<img src="/media/agent-connected.png">
+</kbd>
+
+This is the point where I usually suggest changing the name of the agent on this screen, however, each running of the `docker run` command generates a new UUID for the agent and so this name doesn't stick. Instead you can match up the IP address of the container with the one listed in the details section. 
 
 # Troubleshooting
+
+The output of the `docker run` command will have any details of connection failures. Pay special attention to errors around the websocket connection. 
