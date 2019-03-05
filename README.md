@@ -17,10 +17,10 @@ Save the [Dockerfile](Dockerfile) to the machine running docker, run the docker 
 
 # Installation
 
-First, login to xMatters and navigate to the Developer tab and click the Agents. On the Available tab, you will see the install script for the selected OS. In this case it doesn't matter because all we need are the API keys. So copy the `XMATTERS_KEY` and `API_KEY` values and keep them handy. These are the values pointed to by the green arrows here and hidden behind the white wall:
+First, login to xMatters and navigate to the **Developer** tab and click the **Agents**. On the **Available** tab, you will see the install script for the selected OS. In this case it doesn't matter because all we need are the API keys. So copy the `XMATTERS_KEY` and `API_KEY` values and keep them handy. These are the values pointed to by the green arrows here and hidden behind the white wall:
 
 <kbd>
-   <img src="/media/install-script.png">
+   <img src="/media/install-script.png" width="300">
 </kbd>
 
 Then, save the [Dockerfile](Dockerfile) to some place where you want to run the agent.
@@ -51,8 +51,9 @@ docker run \
 After the `docker run` command chugs away for a moment, head over to the **Installed** tab of the Agents section and there will be a new agent!
 
 <kbd>
-	<img src="/media/agent-connected.png">
+	<img src="/media/agent-connected.png" width="300">
 </kbd>
+
 
 This is the point where I usually suggest changing the name of the agent on this screen, however, each running of the `docker run` command generates a new UUID for the agent and so this name doesn't stick. Instead you can match up the IP address of the container with the one listed in the details section. 
 
