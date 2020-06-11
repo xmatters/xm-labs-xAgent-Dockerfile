@@ -1,0 +1,6 @@
+[xmatters]
+name=xMatters, inc. Yum Repo
+baseurl=http://software.xmatters.com/yum
+enabled=1
+gpgcheck=1
+gpgkey=http://software.xmatters.com/yum/RPM-GPG-KEY-xmatters
