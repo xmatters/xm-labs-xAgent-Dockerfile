@@ -67,7 +67,7 @@ This will create an xAgent in xMatters called:
 After the `docker run` command chugs away for a moment, head over to the **Installed** tab of the Agents section and there will be a new agent!
 
 <kbd>
-	<img src="/media/agent-connected.png" width="300">
+	<img src="/media/agent-connected.png" width="600">
 </kbd>
 
 
