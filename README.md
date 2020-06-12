@@ -49,6 +49,8 @@ docker run --name xa-whatever -d \
    xa:latest
 ```
 
+Optionally, include `-p 8081` to expose an inbound HTTP listener in the xAgent to the system. This allows local triggering of HTTP triggers in xMatters.
+
 This will create an xAgent in xMatters called:
 > yourInstance-xmatters-com/default-zzz
 
