@@ -13,7 +13,7 @@ Docker is a great way to securely run, well, anything. The trick is to properly 
 * Dockerfile - The Dockerfile for telling Docker how to run the xMatters Agent
 
 # How it works
-Save the [Dockerfile](Dockerfile) to the machine running docker, run the docker command and enjoy!
+Save the [Dockerfile](Dockerfile), [docker_entrypoint.sh](docker_entrypoint.sh), and [xmatters.com.repo](xmatters.com.repo) to the machine running docker, run the docker command and enjoy!
 
 # Installation
 
@@ -23,7 +23,7 @@ First, login to xMatters and navigate to the **Developer** tab and click the **A
    <img src="/media/install-script.png" width="300">
 </kbd>
 
-Then, save the [Dockerfile](Dockerfile) to some place where you want to run the agent.
+Then, clone the repository to some place where you want to run the agent.
 
 # Running
 
