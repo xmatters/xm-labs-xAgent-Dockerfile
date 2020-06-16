@@ -13,7 +13,7 @@ Docker is a great way to securely run, well, anything. The trick is to properly 
 * Dockerfile - The Dockerfile for telling Docker how to run the xMatters Agent
 
 # How it works
-Save the [Dockerfile](Dockerfile) to the machine running docker, run the docker command and enjoy!
+Save the [Dockerfile](Dockerfile), [docker_entrypoint.sh](docker_entrypoint.sh), and [xmatters.com.repo](xmatters.com.repo) to the machine running docker, run the docker command and enjoy!
 
 # Installation
 
@@ -23,39 +23,55 @@ First, login to xMatters and navigate to the **Developer** tab and click the **A
    <img src="/media/install-script.png" width="300">
 </kbd>
 
-Then, save the [Dockerfile](Dockerfile) to some place where you want to run the agent.
+Then, clone the repository to some place where you want to run the agent.
 
 # Running
 
 To build the docker image, run the build command from the same directory you save the Dockerfile
 ```
-docker build -t xa .
+docker build -t xa:latest .
 ```
 
 Then, run the following command, swapping out these values:
 * `WEBSOCKET_HOST` should point to your xMatters host url. This should be something like `https://acme.xmatters.com`
 * `WEBSOCKET_SECRET` is `XMATTERS_KEY` from the install script above
 * `OWNER_API_KEY` is the `API_KEY` in the install script above
+* `FRIENDLY_NAME` is a string of your choosing that will be appended to `/default-`
+in your XA's name in xMatters' UI.
 
 
 ```bash
-docker run \
+docker run --name xa-whatever -d \
    -e WEBSOCKET_HOST=https://acme.xmatters.com \
-   -e WEBSOCKET_SECRET=xxxxxxxxxxxxxxxxxxxxxxx \
-   -e OWNER_API_KEY=yyyyyyyyyyyyyyyyyyyyyyy \
+   -e WEBSOCKET_SECRET=xxx \
+   -e OWNER_API_KEY=yyy \
+   -e FRIENDLY_NAME=zzz \
    xa:latest
 ```
+
+Optionally, include `-p 8081` to expose an inbound HTTP listener in the xAgent to the system. This allows local triggering of HTTP triggers in xMatters.
+
+This will create an xAgent in xMatters called:
+> yourInstance-xmatters-com/default-zzz
+
+#### Starting and Stopping
+
+##### Stop the xAgent
+
+    docker stop xa-whatever
+
+##### Start the xAgent
+
+    docker start xa-whatever
 
 
 # Testing
 After the `docker run` command chugs away for a moment, head over to the **Installed** tab of the Agents section and there will be a new agent!
 
 <kbd>
-	<img src="/media/agent-connected.png" width="300">
+	<img src="/media/agent-connected.png" width="600">
 </kbd>
 
-
-This is the point where I usually suggest changing the name of the agent on this screen, however, each running of the `docker run` command generates a new UUID for the agent and so this name doesn't stick. Instead you can match up the IP address of the container with the one listed in the details section. 
 
 # Troubleshooting
 
