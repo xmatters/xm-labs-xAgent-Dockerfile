@@ -33,7 +33,7 @@ docker build -t xa:latest .
 ```
 
 Then, run the following command, swapping out these values:
-* `WEBSOCKET_HOST` should point to your xMatters host url. This should be something like `https://acme.xmatters.com`
+* `WEBSOCKET_HOST` should point to your xMatters hostname. This should be something like `acme.xmatters.com`. Note: Do not include the `https://` portion. 
 * `WEBSOCKET_SECRET` is `XMATTERS_KEY` from the install script above
 * `OWNER_API_KEY` is the `API_KEY` in the install script above
 * `FRIENDLY_NAME` is a string of your choosing that will be appended to `/default-`
@@ -42,7 +42,7 @@ in your XA's name in xMatters' UI.
 
 ```bash
 docker run --name xa-whatever -d \
-   -e WEBSOCKET_HOST=https://acme.xmatters.com \
+   -e WEBSOCKET_HOST=acme.xmatters.com \
    -e WEBSOCKET_SECRET=xxx \
    -e OWNER_API_KEY=yyy \
    -e FRIENDLY_NAME=zzz \
