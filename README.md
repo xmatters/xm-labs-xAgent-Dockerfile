@@ -1,19 +1,16 @@
-# xAgent Dockerfile
-Docker is a great way to securely run, well, anything. The trick is to properly craft a Dockerfile to tell Docker what to run. This repo details how to run the [xMatters xAgent](https://help.xmatters.com/ondemand/xmodwelcome/xmattersagent/xmatters-agent-topic.htm) on Docker.
+# xAgent Containerfile
+Docker/Podman is a great way to securely run, well, anything. The trick is to properly craft a Dockerfile/Containerfile to tell Docker/Podman what to run. This repo details how to run the [xMatters xAgent](https://help.xmatters.com/ondemand/xmodwelcome/xmattersagent/xmatters-agent-topic.htm) on Docker or Podman.
 
 <kbd>
   <img src="https://github.com/xmatters/xMatters-Labs/raw/master/media/disclaimer.png">
 </kbd>
 
 # Pre-Requisites
-* [Docker](https://www.docker.com/)
+* [Docker](https://www.docker.com/) or [Podman](https://podman.io/)
 * xMatters account - If you don't have one, [get one free](https://www.xmatters.com)!
 
-# Files
-* Dockerfile - The Dockerfile for telling Docker how to run the xMatters Agent
-
 # How it works
-Save the [Dockerfile](Dockerfile), [docker_entrypoint.sh](docker_entrypoint.sh), and [xmatters.com.repo](xmatters.com.repo) to the machine running docker, run the docker command and enjoy!
+Save the [Containerfile](Containerfile) ([Dockerfile](Dockerfile)), [entrypoint.sh](entrypoint.sh), and [xmatters.com.repo](xmatters.com.repo) to the machine running docker/podman, run the docker/podman command and enjoy!
 
 # Installation
 
@@ -27,9 +24,13 @@ Clone the repository to some place where you want to build the agent container.
 $ git clone https://github.com/xmatters/xm-labs-xAgent-Dockerfile.git`
 ```
 
-To build the docker image, run the build command from the same directory you save the Dockerfile
+To build the container image, run the build command from the same directory you save the Containerfile (Dockerfile).
 ```sh
+# Docker
 $ docker build -t xmatters-xa:latest .
+
+# or Podman
+$ podman build -t xmatters-xa:latest .
 ```
 
 # Running
@@ -43,16 +44,16 @@ in your XA's name in xMatters' UI.
 ## Example:
 
 ```bash
+# Docker
 docker run --name xa-agent-name -d \
-   -e WEBSOCKET_HOST=acme.xmatters.com \
-   -e WEBSOCKET_SECRET=xxx \
-   -e OWNER_API_KEY=yyy \
+   -e XMATTERS_HOSTNAME=acme.xmatters.com \
+   -e XMATTERS_KEY=xxx \
+   -e API_KEY=yyy \
    -e FRIENDLY_NAME=zzz \
    xmatters-xa:latest
-```
-or 
-```bash
-docker run --name xa-agent-name -d \
+
+# Podman
+podman run --name xa-agent-name -d \
    -e XMATTERS_HOSTNAME=acme.xmatters.com \
    -e XMATTERS_KEY=xxx \
    -e API_KEY=yyy \
@@ -80,14 +81,18 @@ This will create an xAgent in xMatters called:
 ##### Stop the xAgent
 
     docker stop xa-agent-name
+    
+    podman stop xa-agent-name
 
 ##### Start the xAgent
 
     docker start xa-agent-name
+    
+    podman start xa-agent-name
 
 
 # Testing
-After the `docker run` command chugs away for a moment, head over to the **Installed** tab of the Agents section and there will be a new agent!
+After the `docker run` or `podman run` command chugs away for a moment, head over to the **Installed** tab of the Agents section and there will be a new agent!
 
 <kbd>
 	<img src="/media/agent-connected.png" width="600">
@@ -96,4 +101,4 @@ After the `docker run` command chugs away for a moment, head over to the **Insta
 
 # Troubleshooting
 
-The output of the `docker run` command will have any details of connection failures. Pay special attention to errors around the websocket connection. 
+The output of the `docker run` or `podman run` command will have any details of connection failures. Pay special attention to errors around the websocket connection. 
