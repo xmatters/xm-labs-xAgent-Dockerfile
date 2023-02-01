@@ -29,24 +29,34 @@ Then, clone the repository to some place where you want to run the agent.
 
 To build the docker image, run the build command from the same directory you save the Dockerfile
 ```
-docker build -t xa:latest .
+docker build -t xmatters-xa:latest .
 ```
 
-Then, run the following command, swapping out these values:
-* `WEBSOCKET_HOST` should point to your xMatters hostname. This should be something like `acme.xmatters.com`. Note: Do not include the `https://` portion. 
-* `WEBSOCKET_SECRET` is `XMATTERS_KEY` from the install script above
-* `OWNER_API_KEY` is the `API_KEY` in the install script above
-* `FRIENDLY_NAME` is a string of your choosing that will be appended to `/default-`
+Then, run the container with these env variables:
+* `WEBSOCKET_HOST` or `XMATTERS_HOSTNAME` should point to your xMatters hostname. This should be something like `acme.xmatters.com`. Note: Do not include the `https://` portion.
+* `WEBSOCKET_SECRET` or `XMATTERS_KEY` from the install script above.
+* `OWNER_API_KEY` or `API_KEY` in the install script above.
+* `FRIENDLY_NAME` is the agent name/description of your choosing that will be appended to `/default-`
 in your XA's name in xMatters' UI.
 
+## Example:
 
 ```bash
-docker run --name xa-whatever -d \
+docker run --name xa-agent-name -d \
    -e WEBSOCKET_HOST=acme.xmatters.com \
    -e WEBSOCKET_SECRET=xxx \
    -e OWNER_API_KEY=yyy \
    -e FRIENDLY_NAME=zzz \
-   xa:latest
+   xmatters-xa:latest
+```
+or 
+```bash
+docker run --name xa-agent-name -d \
+   -e XMATTERS_HOSTNAME=acme.xmatters.com \
+   -e XMATTERS_KEY=xxx \
+   -e API_KEY=yyy \
+   -e FRIENDLY_NAME=zzz \
+   xmatters-xa:latest
 ```
 
 Optionally, include `-p 8081` to expose an inbound HTTP listener in the xAgent to the system. This allows local triggering of HTTP triggers in xMatters.
@@ -58,11 +68,11 @@ This will create an xAgent in xMatters called:
 
 ##### Stop the xAgent
 
-    docker stop xa-whatever
+    docker stop xa-agent-name
 
 ##### Start the xAgent
 
-    docker start xa-whatever
+    docker start xa-agent-name
 
 
 # Testing

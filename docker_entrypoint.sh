@@ -1,6 +1,13 @@
 #!/bin/bash
 set -e
 
+export WEBSOCKET_HOST="${WEBSOCKET_HOST:=$XMATTERS_HOSTNAME}"
+: "${WEBSOCKET_HOST:?WEBSOCKET_HOST or XMATTERS_HOSTNAME env var must be set}"
+export WEBSOCKET_SECRET="${WEBSOCKET_SECRET:=$XMATTERS_KEY}"
+: "${WEBSOCKET_SECRET:?WEBSOCKET_SECRET or XMATTERS_KEY env var must be set}"
+export OWNER_API_KEY="${OWNER_API_KEY:=$API_KEY}"
+: "${OWNER_API_KEY:?OWNER_API_KEY or API_KEY env var must be set}"
+
 create_prefs() {
     local FRIENDLY_NAME=$1
     local PREFS="${HOME}/.java/.userPrefs/com/xmatters/xagent/services/prefs.xml"
