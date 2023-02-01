@@ -7,7 +7,7 @@ Docker is a great way to securely run, well, anything. The trick is to properly 
 
 # Pre-Requisites
 * [Docker](https://www.docker.com/)
-* xMatters account - If you don't have one, [get one](https://www.xmatters.com)!
+* xMatters account - If you don't have one, [get one free](https://www.xmatters.com)!
 
 # Files
 * Dockerfile - The Dockerfile for telling Docker how to run the xMatters Agent
@@ -17,22 +17,23 @@ Save the [Dockerfile](Dockerfile), [docker_entrypoint.sh](docker_entrypoint.sh),
 
 # Installation
 
-First, login to xMatters and navigate to the **Developer** tab and click the **Agents**. On the **Available** tab, you will see the install script for the selected OS. In this case it doesn't matter because all we need are the API keys. So copy the `XMATTERS_KEY` and `API_KEY` values and keep them handy. These are the values pointed to by the green arrows here and hidden behind the white wall:
+First, login to your xMatters instance and navigate to **Workflows » Agents**. On the **Available** tab, you will see the install script. In this case it doesn't matter which OS is chosen because all we need are the API credentials. So copy `XMATTERS_HOSTNAME`, `XMATTERS_KEY` and `API_KEY` values and keep them handy.
 
-<kbd>
-   <img src="/media/install-script.png" width="300">
-</kbd>
+# Building
 
-Then, clone the repository to some place where you want to run the agent.
+Clone the repository to some place where you want to build the agent container.
 
-# Running
+```sh
+$ git clone https://github.com/xmatters/xm-labs-xAgent-Dockerfile.git`
+```
 
 To build the docker image, run the build command from the same directory you save the Dockerfile
-```
-docker build -t xmatters-xa:latest .
+```sh
+$ docker build -t xmatters-xa:latest .
 ```
 
-Then, run the container with these env variables:
+# Running
+The following ENV variables are required when running the container:
 * `WEBSOCKET_HOST` or `XMATTERS_HOSTNAME` should point to your xMatters hostname. This should be something like `acme.xmatters.com`. Note: Do not include the `https://` portion.
 * `WEBSOCKET_SECRET` or `XMATTERS_KEY` from the install script above.
 * `OWNER_API_KEY` or `API_KEY` in the install script above.
@@ -58,6 +59,16 @@ docker run --name xa-agent-name -d \
    -e FRIENDLY_NAME=zzz \
    xmatters-xa:latest
 ```
+
+If needed you can also pass any of the following proxy settings or any other env vars that the xmatters agent supports to the container:
+* `XA_PROXY_AUTO`
+* `XA_PROXY_PAC`
+* `XA_PROXY_IP`
+* `XA_PROXY_PORT`
+* `XA_PROXY_USER`
+* `XA_PROXY_PASS`
+* `XA_PROXY_DOMAIN`
+* `XA_PROXY_BYPASS`
 
 Optionally, include `-p 8081` to expose an inbound HTTP listener in the xAgent to the system. This allows local triggering of HTTP triggers in xMatters.
 
